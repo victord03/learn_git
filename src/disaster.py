@@ -56,7 +56,6 @@ b)
 """
 
 
-
 import sys
 
 from re import *
@@ -89,6 +88,7 @@ del sys.argv[1]
 # output = open('output','w')
 # out.write(allelesfile)
 # out.close()
+
 
 ###-----------------options-------------------------###
 
@@ -442,22 +442,22 @@ if pathlengths == 'y':
 
 def ATDmean(data, sample, taxon) -> tuple:
 
+    # Taxon are counts of taxa at each level, taxonN are numbers of pairwise differences
+    # at each level, with n being the accumulation of pairwise differences at that level.
+
+    # the difference between n and TaxonN is the number of species that are in different taxa
+    # in that level but not in upper levels
+
     print("\nFunction ATDmean RAN")
     print(f"Parameters: {data=}, {sample=}, {taxon=}")
 
-    #[sample = data.keys()
+    # [sample = data.keys()
 
     N = len(sample)
     Taxon = {}
     taxonN = {}
     AvTD = 0
     n = 0
-
-    # Taxon are counts of taxa at each level, taxonN are numbers of pairwise differences
-    # at each level, with n being the accumulation of pairwise differences at that level.
-    #
-    # the difference between n and TaxonN is the number of species that are in different taxa
-    # in that level but not in upper levels
 
     for t in taxon:
         Taxon[t] = {}
@@ -471,7 +471,7 @@ def ATDmean(data, sample, taxon) -> tuple:
         AvTD = AvTD + (n * coef[t])
         n = taxonN[t]
 
-    #print sample
+    # print(sample)
     AvTD /= (N * (N - 1))
 
     return AvTD, taxonN, Taxon
